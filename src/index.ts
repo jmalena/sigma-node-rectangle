@@ -1,2 +1,2 @@
 export * from "./utils";
-export { NodeSquareProgram } from "./program";
+export { NodeRectangleProgram } from "./program";

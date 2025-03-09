@@ -1,27 +1,39 @@
 import { Attributes } from "graphology-types";
-import { drawDiscNodeLabel } from "sigma/rendering";
 import { Settings } from "sigma/settings";
-import { NodeDisplayData, PartialButFor } from "sigma/types";
+import { PartialButFor } from "sigma/types";
+import type { NodeDisplayDataExt } from "./types";
 
-export function drawSquareNodeLabel<
+export function drawRectangleNodeLabel<
   N extends Attributes = Attributes,
   E extends Attributes = Attributes,
   G extends Attributes = Attributes,
 >(
   context: CanvasRenderingContext2D,
-  data: PartialButFor<NodeDisplayData, "x" | "y" | "size" | "label" | "color">,
+  data: PartialButFor<NodeDisplayDataExt, "x" | "y" | "width" | "size" | "height" | "label" | "color">,
   settings: Settings<N, E, G>,
 ): void {
-  return drawDiscNodeLabel<N, E, G>(context, data, settings);
+  if (!data.label) return;
+
+  const size = settings.labelSize,
+    font = settings.labelFont,
+    weight = settings.labelWeight,
+    color = settings.labelColor.attribute
+      ? data[settings.labelColor.attribute] || settings.labelColor.color || "#000"
+      : settings.labelColor.color;
+
+  context.fillStyle = color;
+  context.font = `${weight} ${size}px ${font}`;
+
+  context.fillText(data.label, data.x + data.size + 3, data.y + size / 3);
 }
 
-export function drawSquareNodeHover<
+export function drawRectangleNodeHover<
   N extends Attributes = Attributes,
   E extends Attributes = Attributes,
   G extends Attributes = Attributes,
 >(
   context: CanvasRenderingContext2D,
-  data: PartialButFor<NodeDisplayData, "x" | "y" | "size" | "label" | "color">,
+  data: PartialButFor<NodeDisplayDataExt, "x" | "y" | "width" | "size" | "height" | "label" | "color">,
   settings: Settings<N, E, G>,
 ): void {
   const size = settings.labelSize,
@@ -66,5 +78,5 @@ export function drawSquareNodeHover<
   context.shadowOffsetY = 0;
   context.shadowBlur = 0;
 
-  drawSquareNodeLabel(context, data, settings);
+  drawRectangleNodeLabel(context, data, settings);
 }

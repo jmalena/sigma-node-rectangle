@@ -2,24 +2,23 @@
   "name": "sigma-node-rectangle",
   "version": "0.1.0",
   "description": "A node program that renders nodes as rectangles for sigma.js",
-  "main": "dist/sigma-node-rectangle.cjs.js",
-  "module": "dist/sigma-node-rectangle.esm.js",
-  "types": "dist/sigma-node-rectangle.cjs.d.ts",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/jmalena/sigma-node-rectangle"
-  },
-  "files": [
+  "main": "src/index.ts",
+  "__main": "dist/index.js",
+  "__types": "dist/index.d.ts",
+  "__files": [
     "/dist"
   ],
-  "sideEffects": false,
+  "scripts": {
+    "build": "tsc && tsc-alias",
+    "build:watch": "tsc --watch"
+  },
   "homepage": "https://github.com/jmalena/sigma-node-rectangle",
   "bugs": {
     "url": "https://github.com/jmalena/sigma-node-rectangle/issues"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/jmalena/sigma-node-rectangle",
+    "url": "https://github.com/jmalena/sigma-node-rectangle"
   },
   "keywords": [
     "graph",
@@ -37,20 +36,12 @@
     }
   ],
   "license": "MIT",
-  "preconstruct": {
-    "entrypoints": [
-      "index.ts"
-    ]
-  },
   "peerDependencies": {
+    "graphology-types": "^0.24.0",
     "sigma": ">=3.0.0-beta.17"
   },
-  "exports": {
-    ".": {
-      "module": "./dist/sigma-node-rectangle.esm.js",
-      "import": "./dist/sigma-node-rectangle.cjs.mjs",
-      "default": "./dist/sigma-node-rectangle.cjs.js"
-    },
-    "./package.json": "./package.json"
+  "devDependencies": {
+    "tsc-alias": "^1.8.11",
+    "typescript": "^5.8.2"
   }
 }
